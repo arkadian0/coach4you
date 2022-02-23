@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    driverClassName: org.testcontainers.jdbc.ContainerDatabaseDriver
+    url: jdbc:tc:postgresql:14.0:///ranker
+  flyway:
+    enabled: true
+    locations: classpath:db/migration/prod, db/migration/test
+logging:
+  level:
+    org:
+      springframework:
+        jdbc:
+          core: TRACE

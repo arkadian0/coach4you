@@ -1,0 +1,17 @@
+version: "3.7"
+
+volumes:
+  PostgresData:
+
+services:
+  db:
+    image: postgres:14.1
+    ports:
+      - 5432:5432
+    restart: always
+    volumes:
+      - PostgresData:/var/lib/postgresql/data2
+    environment:
+      POSTGRES_DB: coachforyou
+      POSTGRES_USER: coach4you
+      POSTGRES_PASSWORD: coach4you

@@ -1,0 +1,13 @@
+spring:
+  config:
+    import: classpath:sql.yaml
+  datasource:
+    url: jdbc:postgresql://localhost::5432/coach4you
+    username: coachforyou
+    password: coach4you
+    driver-class-name: org.postgresql.Driver
+  flyway:
+    locations: classpath:${FLYWAY_PATH:db/migration/prod}
+server:
+  servlet:
+    context-path: /coach4you
