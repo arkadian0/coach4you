@@ -1,13 +1,23 @@
 spring:
-  config:
-    import: classpath:sql.yaml
   datasource:
-    url: jdbc:postgresql://localhost::5432/coach4you
-    username: coachforyou
+    url: jdbc:postgresql://localhost:5432/coachforyou
+    username: coach4you
     password: coach4you
     driver-class-name: org.postgresql.Driver
   flyway:
-    locations: classpath:${FLYWAY_PATH:db/migration/prod}
+    locations: classpath:db/migration/prod
+    baseline-on-migrate: true
+    enabled: true
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
 server:
   servlet:
     context-path: /coach4you
+
+logging:
+  level:
+    org:
+      flywaydb: debug

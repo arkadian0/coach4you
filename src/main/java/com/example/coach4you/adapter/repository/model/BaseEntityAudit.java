@@ -3,6 +3,7 @@ package com.example.coach4you.adapter.repository.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -12,87 +13,71 @@ import javax.persistence.TemporalType;
 @MappedSuperclass
 public abstract class BaseEntityAudit extends BaseEntity implements Serializable {
 
-  private String createdBy;
-  private String updatedBy;
+  @Column(name = "create_date", nullable = false)
+  private LocalDateTime createDate;
 
-  @Temporal(TemporalType.TIMESTAMP)
-  private LocalDateTime createdAt;
-
-  @Temporal(TemporalType.TIMESTAMP)
-  private LocalDateTime updatedAt;
+  @Column(name = "modification_date", nullable = false)
+  private LocalDateTime modificationDate;
 
   /**
-   * Sets createdAt before insert
+   * Sets createDate before insert
    */
   @PrePersist
   public void setCreationDate() {
-    this.createdAt = LocalDateTime.now();
+    this.createDate = LocalDateTime.now();
+    this.modificationDate = LocalDateTime.now();
   }
 
   /**
-   * Sets updatedAt before update
+   * Sets modificationDate before update
    */
   @PreUpdate
   public void setChangeDate() {
-    this.updatedAt = LocalDateTime.now();
+    this.modificationDate = LocalDateTime.now();
   }
 
-  public LocalDateTime getCreatedAt() {
-    return createdAt;
+  public LocalDateTime getCreateDate() {
+    return createDate;
   }
 
-  public void setCreatedAt(LocalDateTime createdAt) {
-    this.createdAt = createdAt;
+  public void setCreateDate(LocalDateTime createDate) {
+    this.createDate = createDate;
   }
 
-  public LocalDateTime getUpdatedAt() {
-    return updatedAt;
+  public LocalDateTime getModificationDate() {
+    return modificationDate;
   }
 
-  public void setUpdatedAt(LocalDateTime updatedAt) {
-    this.updatedAt = updatedAt;
-  }
-
-  public String getCreatedBy() {
-    return createdBy;
-  }
-
-  public void setCreatedBy(String createdBy) {
-    this.createdBy = createdBy;
-  }
-
-  public String getUpdatedBy() {
-    return updatedBy;
-  }
-
-  public void setUpdatedBy(String updatedBy) {
-    this.updatedBy = updatedBy;
+  public void setModificationDate(LocalDateTime modificationDate) {
+    this.modificationDate = modificationDate;
   }
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    if (!super.equals(o)) return false;
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    if (!super.equals(o)) {
+      return false;
+    }
     BaseEntityAudit that = (BaseEntityAudit) o;
-    return Objects.equals(createdBy, that.createdBy) &&
-        Objects.equals(updatedBy, that.updatedBy) &&
-        Objects.equals(createdAt, that.createdAt) &&
-        Objects.equals(updatedAt, that.updatedAt);
+    return Objects.equals(createDate, that.createDate) &&
+        Objects.equals(modificationDate, that.modificationDate);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), createdBy, updatedBy, createdAt, updatedAt);
+    return Objects.hash(super.hashCode(), createDate, modificationDate);
   }
 
   @Override
   public String toString() {
     return "BaseEntityAudit{" +
-        "createdBy='" + createdBy + '\'' +
-        ", updatedBy='" + updatedBy + '\'' +
-        ", createdAt=" + createdAt +
-        ", updatedAt=" + updatedAt +
+        "createDate=" + createDate +
+        ", modificationDate=" + modificationDate +
         "} " + super.toString();
   }
 }
