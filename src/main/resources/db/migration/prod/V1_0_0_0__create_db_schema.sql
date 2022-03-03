@@ -1,11 +1,14 @@
 -- ordinary_user TABLE ------------------------------------------------------------------------
 CREATE TABLE "ordinary_user"
 (
-    id         SERIAL      NOT NULL,
-    first_name VARCHAR(50) NOT NULL,
-    last_name  VARCHAR(50) NOT NULL,
-    email      VARCHAR(70) NOT NULL,
-    age        INTEGER     NOT NULL
+    id                SERIAL      NOT NULL,
+    first_name        VARCHAR(50) NOT NULL,
+    last_name         VARCHAR(50) NOT NULL,
+    email             VARCHAR(70) NOT NULL UNIQUE,
+    age               INTEGER     NOT NULL,
+    create_date       TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    modification_date TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    version           BIGINT      NOT NULL DEFAULT (0)
 );
 
 CREATE
@@ -19,13 +22,17 @@ ALTER TABLE "ordinary_user"
 -- coach TABLE ------------------------------------------------------------------------
 CREATE TABLE coach
 (
-    id                  SERIAL      NOT NULL,
-    first_name          VARCHAR(50) NOT NULL,
-    last_name           VARCHAR(50) NOT NULL,
-    email               VARCHAR(70) NOT NULL,
-    age                 INTEGER     NOT NULL,
+    id                  SERIAL       NOT NULL,
+    first_name          VARCHAR(50)  NOT NULL,
+    last_name           VARCHAR(50)  NOT NULL,
+    email               VARCHAR(70)  NOT NULL UNIQUE,
+    age                 INTEGER      NOT NULL,
+    professions         VARCHAR(255) NOT NULL,
     description         VARCHAR(255),
-    years_of_experience VARCHAR(10)
+    years_of_experience VARCHAR(10),
+    create_date         TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    modification_date   TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    version             BIGINT       NOT NULL DEFAULT (0)
 );
 
 CREATE
@@ -60,8 +67,9 @@ ALTER TABLE coach_ordinary_user
 CREATE TABLE sport_dictionary
 (
     id          SERIAL      NOT NULL,
-    name        VARCHAR(50) NOT NULL,
-    description VARCHAR(50) NOT NULL
+    code        VARCHAR(50) NOT NULL UNIQUE,
+    description VARCHAR(50) NOT NULL,
+    version     BIGINT      NOT NULL DEFAULT (0)
 );
 
 CREATE
@@ -72,56 +80,41 @@ ALTER TABLE sport_dictionary
     ADD CONSTRAINT sport_dictionary_pk
         PRIMARY KEY (id);
 
--- specialization_dictionary TABLE ------------------------------------------------------------------------
-CREATE TABLE specialization_dictionary
+-- activity_dictionary TABLE ------------------------------------------------------------------------
+CREATE TABLE activity_dictionary
 (
     id          SERIAL      NOT NULL,
-    name        VARCHAR(50) NOT NULL,
-    description VARCHAR(50) NOT NULL
+    code        VARCHAR(50) NOT NULL UNIQUE,
+    description VARCHAR(50) NOT NULL,
+    version     BIGINT      NOT NULL DEFAULT (0)
 );
 
 CREATE
-UNIQUE INDEX specialization_dictionary_id_uindex
-    ON specialization_dictionary (id);
+UNIQUE INDEX activity_dictionary_id_uindex
+    ON activity_dictionary (id);
 
-ALTER TABLE specialization_dictionary
-    ADD CONSTRAINT specialization_dictionary_pk
+ALTER TABLE activity_dictionary
+    ADD CONSTRAINT activity_dictionary_pk
         PRIMARY KEY (id);
 
--- classes_dictionary TABLE ------------------------------------------------------------------------
-CREATE TABLE classes_dictionary
+-- coach_activity_dictionary TABLE ------------------------------------------------------------------------
+CREATE TABLE coach_activity_dictionary
 (
-    id          SERIAL      NOT NULL,
-    name        VARCHAR(50) NOT NULL,
-    description VARCHAR(50) NOT NULL
-);
-
-CREATE
-UNIQUE INDEX classes_dictionary_id_uindex
-    ON classes_dictionary (id);
-
-ALTER TABLE classes_dictionary
-    ADD CONSTRAINT classes_dictionary_pk
-        PRIMARY KEY (id);
-
--- coach_classes_dictionary TABLE ------------------------------------------------------------------------
-CREATE TABLE coach_classes_dictionary
-(
-    coach_id              INTEGER NOT NULL,
-    classes_dictionary_id INTEGER NOT NULL,
-    CONSTRAINT coach_classes_dictionary_coach_fk
+    coach_id               INTEGER NOT NULL,
+    activity_dictionary_id INTEGER NOT NULL,
+    CONSTRAINT coach_activity_dictionary_coach_fk
         FOREIGN KEY (coach_id) REFERENCES coach (id) ON DELETE CASCADE,
-    CONSTRAINT coach_classes_dictionary_classes_dictionary_fk
-        FOREIGN KEY (classes_dictionary_id) REFERENCES classes_dictionary (id) ON DELETE CASCADE
+    CONSTRAINT coach_activity_dictionary_activity_dictionary_fk
+        FOREIGN KEY (activity_dictionary_id) REFERENCES activity_dictionary (id) ON DELETE CASCADE
 );
 
 CREATE
-UNIQUE INDEX coach_classes_dictionary_id_uindex
-    ON coach_classes_dictionary (coach_id, classes_dictionary_id);
+UNIQUE INDEX coach_activity_dictionary_id_uindex
+    ON coach_activity_dictionary (coach_id, activity_dictionary_id);
 
-ALTER TABLE coach_classes_dictionary
-    ADD CONSTRAINT coach_classes_dictionary_pk
-        PRIMARY KEY (coach_id, classes_dictionary_id);
+ALTER TABLE coach_activity_dictionary
+    ADD CONSTRAINT coach_activity_dictionary_pk
+        PRIMARY KEY (coach_id, activity_dictionary_id);
 
 -- coach_sport_dictionary TABLE ------------------------------------------------------------------------
 CREATE TABLE coach_sport_dictionary
@@ -141,22 +134,3 @@ UNIQUE INDEX coach_sport_dictionary_id_uindex
 ALTER TABLE coach_sport_dictionary
     ADD CONSTRAINT coach_sport_dictionary_pk
         PRIMARY KEY (coach_id, sport_dictionary_id);
-
--- coach_specialization_dictionary TABLE ------------------------------------------------------------------------
-CREATE TABLE coach_specialization_dictionary
-(
-    coach_id                     INTEGER NOT NULL,
-    specialization_dictionary_id INTEGER NOT NULL,
-    CONSTRAINT coach_specialization_dictionary_coach_fk
-        FOREIGN KEY (coach_id) REFERENCES coach (id) ON DELETE CASCADE,
-    CONSTRAINT coach_specialization_dictionary_specialization_dictionary_fk
-        FOREIGN KEY (specialization_dictionary_id) REFERENCES specialization_dictionary (id) ON DELETE CASCADE
-);
-
-CREATE
-UNIQUE INDEX coach_specialization_dictionary_id_uindex
-    ON coach_specialization_dictionary (coach_id, specialization_dictionary_id);
-
-ALTER TABLE coach_specialization_dictionary
-    ADD CONSTRAINT coach_specialization_dictionary_pk
-        PRIMARY KEY (coach_id, specialization_dictionary_id);
