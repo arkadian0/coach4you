@@ -9,7 +9,7 @@ VALUES ('FOOTBALL', 'Piłka nożna'),       --ID 1--
        ('GYM', 'Siłownia'); --ID 8--
 
 INSERT INTO activity_dictionary (code, description)
-VALUES ('FOR_CHILDREN', 'Zajęcia dla dzieci'),   --ID 1--
+VALUES ('FOR_CHILDREN', 'Zajęcia dla dzieci'),    --ID 1--
        ('FOR_ADULTS', 'Zajęcia dla dorosłych'),   --ID 2--
        ('FOR_GROUP', 'Zajęcia grupowe'),          --ID 3--
        ('FOR_INDIVIDUAL', 'Zajęcia indywidualne'),--ID 4--

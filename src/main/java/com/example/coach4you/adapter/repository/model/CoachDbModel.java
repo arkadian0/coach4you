@@ -1,9 +1,12 @@
 package com.example.coach4you.adapter.repository.model;
 
+import com.example.coach4you.core.domain.coach.ActivitySpecialization;
 import com.example.coach4you.core.domain.coach.Coach;
+import com.example.coach4you.core.domain.coach.ProfessionSpecialization;
+import com.example.coach4you.core.domain.coach.SportSpecialization;
+import com.example.coach4you.core.domain.user.PersonDetails;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +14,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -104,5 +106,19 @@ public class CoachDbModel extends BaseEntityAudit {
     return Objects
         .hash(super.hashCode(), firstName, lastName, email, yearsOfExperience, description, age,
             activityDictionaries, sportDictionaries);
+  }
+
+  public Coach toDomain() {
+    PersonDetails personDetails = new PersonDetails(this.firstName, this.lastName,
+        this.email, this.age);
+    ProfessionSpecialization professionSpecialization = new ProfessionSpecialization(
+       this.getProfessions());
+    List<SportSpecialization> sportSpecializations = SportDictionaryDbModel
+        .toDomain(this.getSportDictionaries());
+    List<ActivitySpecialization> activitySpecializations = ActivityDictionaryDbModel
+        .toDomain(this.getActivityDictionaries());
+    return new Coach(this.id, personDetails, this.getYearsOfExperience(),
+        this.getDescription(), professionSpecialization, sportSpecializations,
+        activitySpecializations);
   }
 }

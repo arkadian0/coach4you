@@ -4,20 +4,25 @@ import com.example.coach4you.core.domain.coach.ActivitySpecialization;
 import com.example.coach4you.core.domain.coach.enums.ActivityType;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
+import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.SuperBuilder;
 
 @Data
 @Entity
+@SuperBuilder
 @Table(name = "activity_dictionary")
-public class ActivityDictionaryDbModel extends BaseEntity{
+public class ActivityDictionaryDbModel extends BaseEntity {
 
   @Column(name = "code", nullable = false, length = 50, unique = true)
-  private String code;
+  @Enumerated(EnumType.STRING)
+  private ActivityType code;
 
   @Column(name = "description", nullable = false, length = 50)
   private String description;
@@ -25,10 +30,12 @@ public class ActivityDictionaryDbModel extends BaseEntity{
   public ActivityDictionaryDbModel() {
   }
 
-  public static Set<ActivitySpecialization> toDomain(List<ActivityDictionaryDbModel> activityDictionaries) {
+  public static List<ActivitySpecialization> toDomain(
+      List<ActivityDictionaryDbModel> activityDictionaries) {
     return activityDictionaries.stream()
-        .map(activity -> new ActivitySpecialization(ActivityType.valueOf(activity.getCode())))
-        .collect(Collectors.toSet());
+        .map(activity -> new ActivitySpecialization(activity.getId(),
+            activity.getCode(), activity.getDescription()))
+        .collect(Collectors.toList());
   }
 
   @Override

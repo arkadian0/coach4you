@@ -15,8 +15,9 @@ class ActivityDictJpaRepositoryAdapter implements ActivitySpecializationReposito
   private final ActivityDictionaryJpaRepository activityDictionaryJpaRepository;
 
   @Override
-  public Set<ActivitySpecialization> findActivitySpecializationsByIds(Set<Long> activityIds) {
-    List<ActivityDictionaryDbModel> activityDictionaries = activityDictionaryJpaRepository.findAllById(activityIds);
+  public List<ActivitySpecialization> findActivitySpecializationsByIds(Set<Long> activityIds) {
+    List<ActivityDictionaryDbModel> activityDictionaries = activityDictionaryJpaRepository
+        .findAllById(activityIds);
     return ActivityDictionaryDbModel.toDomain(activityDictionaries);
   }
 }
