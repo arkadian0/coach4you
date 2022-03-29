@@ -8,14 +8,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
+import lombok.experimental.SuperBuilder;
 
+@SuperBuilder
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", insertable = false, nullable = false)
-  private Long id;
+  protected Long id;
 
   @Version
   private Long version;
@@ -36,10 +38,17 @@ public abstract class BaseEntity implements Serializable {
     this.version = version;
   }
 
+  public BaseEntity() {
+  }
+
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
     BaseEntity that = (BaseEntity) o;
     return Objects.equals(id, that.id) &&
         Objects.equals(version, that.version);

@@ -4,20 +4,24 @@ import com.example.coach4you.core.domain.coach.SportSpecialization;
 import com.example.coach4you.core.domain.coach.enums.SportType;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import lombok.Data;
+import lombok.experimental.SuperBuilder;
 
 @Data
 @Entity
+@SuperBuilder
 @Table(name = "sport_dictionary")
 public class SportDictionaryDbModel extends BaseEntity {
 
+  @Enumerated(EnumType.STRING)
   @Column(name = "code", nullable = false, length = 50, unique = true)
-  private String code;
+  private SportType code;
 
   @Column(name = "description", nullable = false, length = 50)
   private String description;
@@ -25,10 +29,11 @@ public class SportDictionaryDbModel extends BaseEntity {
   public SportDictionaryDbModel() {
   }
 
-  public static Set<SportSpecialization> toDomain(List<SportDictionaryDbModel> sportDictionaries) {
+  public static List<SportSpecialization> toDomain(List<SportDictionaryDbModel> sportDictionaries) {
     return sportDictionaries.stream()
-        .map(sport -> new SportSpecialization(SportType.valueOf(sport.getCode())))
-        .collect(Collectors.toSet());
+        .map(sport -> new SportSpecialization(sport.getId(), sport.getCode(),
+            sport.getDescription()))
+        .collect(Collectors.toList());
   }
 
   @Override

@@ -1,6 +1,7 @@
 package com.example.coach4you.core.domain.user;
 
 public class PersonDetails {
+
   private String firstName;
   private String lastName;
   private Email email;
@@ -22,7 +23,7 @@ public class PersonDetails {
   }
 
   public String getEmail() {
-    return email.getValue();
+    return email.value();
   }
 
   public Short getAge() {
