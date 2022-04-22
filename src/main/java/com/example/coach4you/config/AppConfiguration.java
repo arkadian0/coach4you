@@ -5,6 +5,4 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @EnableWebMvc
 @Configuration
-public class AppConfiguration {
-
-}
+public class AppConfiguration {}

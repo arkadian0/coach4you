@@ -10,7 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
-import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
 
@@ -20,21 +19,26 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "activity_dictionary")
 public class ActivityDictionaryDbModel extends BaseEntity {
 
-  @Column(name = "code", nullable = false, length = 50, unique = true)
+  @Column(
+      name = "type",
+      nullable = false,
+      length = EntityModelConstans.COL_LENGTH_50,
+      unique = true)
   @Enumerated(EnumType.STRING)
-  private ActivityType code;
+  private ActivityType type;
 
-  @Column(name = "description", nullable = false, length = 50)
+  @Column(name = "description", nullable = false, length = EntityModelConstans.COL_LENGTH_50)
   private String description;
 
-  public ActivityDictionaryDbModel() {
-  }
+  public ActivityDictionaryDbModel() {}
 
   public static List<ActivitySpecialization> toDomain(
       List<ActivityDictionaryDbModel> activityDictionaries) {
     return activityDictionaries.stream()
-        .map(activity -> new ActivitySpecialization(activity.getId(),
-            activity.getCode(), activity.getDescription()))
+        .map(
+            activity ->
+                new ActivitySpecialization(
+                    activity.getId(), activity.getType(), activity.getDescription()))
         .collect(Collectors.toList());
   }
 
@@ -50,12 +54,11 @@ public class ActivityDictionaryDbModel extends BaseEntity {
       return false;
     }
     ActivityDictionaryDbModel that = (ActivityDictionaryDbModel) o;
-    return Objects.equals(code, that.code) && Objects
-        .equals(description, that.description);
+    return Objects.equals(type, that.type) && Objects.equals(description, that.description);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), code, description);
+    return Objects.hash(super.hashCode(), type, description);
   }
 }

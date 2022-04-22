@@ -1,4 +1,4 @@
-INSERT INTO sport_dictionary (code, description)
+INSERT INTO sport_dictionary (type, description)
 VALUES ('FOOTBALL', 'Piłka nożna'),       --ID 1--
        ('VOLLEYBALL', 'Siatkówka'),       --ID 2--
        ('BASKETBALL', 'Koszykówka'),      --ID 3--
@@ -8,7 +8,7 @@ VALUES ('FOOTBALL', 'Piłka nożna'),       --ID 1--
        ('SWIMMING', 'Pływanie'),          --ID 7--
        ('GYM', 'Siłownia'); --ID 8--
 
-INSERT INTO activity_dictionary (code, description)
+INSERT INTO activity_dictionary (type, description)
 VALUES ('FOR_CHILDREN', 'Zajęcia dla dzieci'),    --ID 1--
        ('FOR_ADULTS', 'Zajęcia dla dorosłych'),   --ID 2--
        ('FOR_GROUP', 'Zajęcia grupowe'),          --ID 3--

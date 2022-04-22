@@ -17,18 +17,14 @@ public abstract class BaseEntityAudit extends BaseEntity implements Serializable
   @Column(name = "modification_date", nullable = false)
   private LocalDateTime modificationDate;
 
-  /**
-   * Sets createDate before insert
-   */
+  /** Sets createDate before insert */
   @PrePersist
   public void setCreationDate() {
     this.createDate = LocalDateTime.now();
     this.modificationDate = LocalDateTime.now();
   }
 
-  /**
-   * Sets modificationDate before update
-   */
+  /** Sets modificationDate before update */
   @PreUpdate
   public void setChangeDate() {
     this.modificationDate = LocalDateTime.now();
@@ -62,8 +58,8 @@ public abstract class BaseEntityAudit extends BaseEntity implements Serializable
       return false;
     }
     BaseEntityAudit that = (BaseEntityAudit) o;
-    return Objects.equals(createDate, that.createDate) &&
-        Objects.equals(modificationDate, that.modificationDate);
+    return Objects.equals(createDate, that.createDate)
+        && Objects.equals(modificationDate, that.modificationDate);
   }
 
   @Override
@@ -73,9 +69,12 @@ public abstract class BaseEntityAudit extends BaseEntity implements Serializable
 
   @Override
   public String toString() {
-    return "BaseEntityAudit{" +
-        "createDate=" + createDate +
-        ", modificationDate=" + modificationDate +
-        "} " + super.toString();
+    return "BaseEntityAudit{"
+        + "createDate="
+        + createDate
+        + ", modificationDate="
+        + modificationDate
+        + "} "
+        + super.toString();
   }
 }

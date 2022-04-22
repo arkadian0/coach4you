@@ -1,8 +1,5 @@
 package com.example.coach4you.adapter.repository.model;
 
-import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -14,8 +11,7 @@ import javax.persistence.Table;
 @Table(name = "coach_ordinary_user")
 public class CouchOrdinaryUserDbModel {
 
-  @EmbeddedId
-  CouchOrdinaryUserKey id;
+  @EmbeddedId CouchOrdinaryUserKey id;
 
   @ManyToOne
   @MapsId("coachId")
@@ -26,16 +22,4 @@ public class CouchOrdinaryUserDbModel {
   @MapsId("ordinaryUserId")
   @JoinColumn(name = "ordinary_user_id")
   OrdinaryUserDbModel course;
-
-}
-
-@Embeddable
-class CouchOrdinaryUserKey implements Serializable {
-
-  @Column(name = "coach_id")
-  Long coachId;
-
-  @Column(name = "ordinary_user_id")
-  Long ordinaryUserId;
-
 }

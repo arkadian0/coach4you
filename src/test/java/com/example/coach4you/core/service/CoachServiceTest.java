@@ -21,53 +21,57 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class CoachServiceTest {
 
-  @Mock
-  private CoachRepository coachRepository;
+  @Mock private CoachRepository coachRepository;
 
-  @InjectMocks
-  private CoachService coachService;
+  @InjectMocks private CoachService coachService;
 
   @Test
   void should_correct_create_coach() throws Exception {
-    //given
-    var createCoachCommand = new CreateCoachCommand("Adrian", "Nowak",
-        "adrian.nowak@gmail.com", (short) 25, "2-40", "Best coach", List.of(1L, 2L),
-        List.of(1L, 2L), List.of("Coach, Instructor"));
+    // given
+    var createCoachCommand =
+        new CreateCoachCommand(
+            "Adrian",
+            "Nowak",
+            "adrian.nowak@gmail.com",
+            (short) 25,
+            "2-40",
+            "Best coach",
+            List.of(1L, 2L),
+            List.of(1L, 2L),
+            List.of("Coach, Instructor"));
     var cratedCoachId = 111L;
     when(coachRepository.createCoach(any())).thenReturn(cratedCoachId);
 
-    //when
+    // when
     var coachId = coachService.createCoach(createCoachCommand);
 
-    //then
+    // then
     assertThat(coachId).isNotNull();
     assertThat(coachId).isEqualTo(cratedCoachId);
   }
 
   @Test
   void should_correct_get_coach() {
-    //given
+    // given
     var coachId = 1L;
     Coach foundedCoach = CoachFactory.getCoach();
     when(coachRepository.getCoachById(coachId)).thenReturn(Optional.of(foundedCoach));
 
-    //when
+    // when
     Coach coach = coachService.getCoach(coachId);
 
-    //then
+    // then
     assertThat(coach.getId()).isEqualTo(foundedCoach.getId());
   }
 
   @Test
   void should_throw_exception_when_coach_not_found() {
-    //given
+    // given
     var fakeLongId = 111L;
     when(coachRepository.getCoachById(fakeLongId)).thenReturn(Optional.empty());
 
     assertThatExceptionOfType(CoachNotFoundException.class)
         .isThrownBy(() -> coachService.getCoach(fakeLongId))
         .withMessage(String.format("Coach by id %s, not found", fakeLongId));
-
   }
-
 }

@@ -8,4 +8,6 @@ public interface CoachRepository {
   long createCoach(Coach coach);
 
   Optional<Coach> getCoachById(long coachId);
+
+  void updateCoach(Coach coach);
 }

@@ -20,19 +20,23 @@ import lombok.experimental.SuperBuilder;
 public class SportDictionaryDbModel extends BaseEntity {
 
   @Enumerated(EnumType.STRING)
-  @Column(name = "code", nullable = false, length = 50, unique = true)
-  private SportType code;
+  @Column(
+      name = "type",
+      nullable = false,
+      length = EntityModelConstans.COL_LENGTH_50,
+      unique = true)
+  private SportType type;
 
-  @Column(name = "description", nullable = false, length = 50)
+  @Column(name = "description", nullable = false, length = EntityModelConstans.COL_LENGTH_50)
   private String description;
 
-  public SportDictionaryDbModel() {
-  }
+  public SportDictionaryDbModel() {}
 
   public static List<SportSpecialization> toDomain(List<SportDictionaryDbModel> sportDictionaries) {
     return sportDictionaries.stream()
-        .map(sport -> new SportSpecialization(sport.getId(), sport.getCode(),
-            sport.getDescription()))
+        .map(
+            sport ->
+                new SportSpecialization(sport.getId(), sport.getType(), sport.getDescription()))
         .collect(Collectors.toList());
   }
 
@@ -48,12 +52,11 @@ public class SportDictionaryDbModel extends BaseEntity {
       return false;
     }
     SportDictionaryDbModel that = (SportDictionaryDbModel) o;
-    return Objects.equals(code, that.code) && Objects
-        .equals(description, that.description);
+    return Objects.equals(type, that.type) && Objects.equals(description, that.description);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), code, description);
+    return Objects.hash(super.hashCode(), type, description);
   }
 }

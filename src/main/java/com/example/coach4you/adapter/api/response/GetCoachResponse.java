@@ -5,16 +5,18 @@ import com.example.coach4you.core.domain.user.PersonDetails;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public record FetchCoachResponse(long coachId, String firstName, String lastName,
-                                 String email, short age, String yearsOfExperience,
-                                 String description, List<String> professions,
-                                 List<SportSpecializationDto> sportSpecializations, List<ActivitySpecializationDto> activitySpecializations) {
+public record GetCoachResponse(long coachId, String firstName, String lastName,
+                               String email, short age, String yearsOfExperience,
+                               String description, List<String> professions,
+                               List<SportSpecializationDto> sportSpecializations,
+                               List<ActivitySpecializationDto> activitySpecializations) {
 
-  public static FetchCoachResponse of(Coach coach) {
+  public static GetCoachResponse of(Coach coach) {
     PersonDetails personDetails = coach.getPersonDetails();
     List<SportSpecializationDto> sportSpecializationDtos = createSportSpecializationDtos(coach);
-    List<ActivitySpecializationDto> activitySpecializationDtos = createActivitySpecializationDtos(coach);
-    return new FetchCoachResponse(coach.getId(), personDetails.getFirstName(),
+    List<ActivitySpecializationDto> activitySpecializationDtos = createActivitySpecializationDtos(
+        coach);
+    return new GetCoachResponse(coach.getId(), personDetails.getFirstName(),
         personDetails.getLastName(), personDetails.getEmail(), personDetails.getAge(),
         coach.getYearsOfExperience(), coach.getDescription(),
         coach.getProfessionSpecialization().getProfessions(),

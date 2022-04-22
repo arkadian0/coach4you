@@ -29,4 +29,11 @@ public class PersonDetails {
   public Short getAge() {
     return age;
   }
+
+  public void update(String firstName, String lastName, String email, Short age) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = new Email(email);
+    this.age = age;
+  }
 }

@@ -16,8 +16,8 @@ class SportDictionaryJpaRepositoryAdapter implements SportSpecializationReposito
 
   @Override
   public List<SportSpecialization> findSportSpecializationsByIds(Set<Long> activityIds) {
-    List<SportDictionaryDbModel> sportDictionaries = sportDictionaryJpaRepository
-        .findAllById(activityIds);
+    List<SportDictionaryDbModel> sportDictionaries =
+        sportDictionaryJpaRepository.findAllById(activityIds);
     return SportDictionaryDbModel.toDomain(sportDictionaries);
   }
 }

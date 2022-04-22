@@ -19,8 +19,7 @@ public abstract class BaseEntity implements Serializable {
   @Column(name = "id", insertable = false, nullable = false)
   protected Long id;
 
-  @Version
-  private Long version;
+  @Version private Long version;
 
   public Long getId() {
     return id;
@@ -38,8 +37,7 @@ public abstract class BaseEntity implements Serializable {
     this.version = version;
   }
 
-  public BaseEntity() {
-  }
+  public BaseEntity() {}
 
   @Override
   public boolean equals(Object o) {
@@ -50,8 +48,7 @@ public abstract class BaseEntity implements Serializable {
       return false;
     }
     BaseEntity that = (BaseEntity) o;
-    return Objects.equals(id, that.id) &&
-        Objects.equals(version, that.version);
+    return Objects.equals(id, that.id) && Objects.equals(version, that.version);
   }
 
   @Override
@@ -61,9 +58,6 @@ public abstract class BaseEntity implements Serializable {
 
   @Override
   public String toString() {
-    return "BaseEntity{" +
-        "id=" + id +
-        ", version=" + version +
-        '}';
+    return "BaseEntity{" + "id=" + id + ", version=" + version + '}';
   }
 }

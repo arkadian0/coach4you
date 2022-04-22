@@ -5,7 +5,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-public record CreateCoachRequest(@NotEmpty String firstName, @NotEmpty String lastName,
+public record UpdateCoachRequest(@NotEmpty String firstName, @NotEmpty String lastName,
                                  @NotEmpty @Email String email, @NotNull Short age,
                                  @NotEmpty String yearsOfExperience, @NotEmpty String description,
                                  @NotNull List<Long> sportIds,

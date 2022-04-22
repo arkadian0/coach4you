@@ -67,7 +67,7 @@ ALTER TABLE coach_ordinary_user
 CREATE TABLE sport_dictionary
 (
     id          SERIAL      NOT NULL,
-    code        VARCHAR(50) NOT NULL UNIQUE,
+    type        VARCHAR(50) NOT NULL UNIQUE,
     description VARCHAR(50) NOT NULL,
     version     BIGINT      NOT NULL DEFAULT (0)
 );
@@ -84,7 +84,7 @@ ALTER TABLE sport_dictionary
 CREATE TABLE activity_dictionary
 (
     id          SERIAL      NOT NULL,
-    code        VARCHAR(50) NOT NULL UNIQUE,
+    type        VARCHAR(50) NOT NULL UNIQUE,
     description VARCHAR(50) NOT NULL,
     version     BIGINT      NOT NULL DEFAULT (0)
 );
