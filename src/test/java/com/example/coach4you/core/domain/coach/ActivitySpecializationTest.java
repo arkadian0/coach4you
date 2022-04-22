@@ -14,11 +14,11 @@ class ActivitySpecializationTest {
     List<Long> activitySpecializationIds = List.of(111L, 112L);
 
     // when
-    List<ActivitySpecialization> activitySpecializations = ActivitySpecialization.of(activitySpecializationIds);
+    List<ActivitySpecialization> activitySpecializations =
+        ActivitySpecialization.of(activitySpecializationIds);
 
     // then
     assertThat(activitySpecializations.get(0).getId()).isEqualTo(activitySpecializationIds.get(0));
     assertThat(activitySpecializations.get(1).getId()).isEqualTo(activitySpecializationIds.get(1));
   }
-
 }

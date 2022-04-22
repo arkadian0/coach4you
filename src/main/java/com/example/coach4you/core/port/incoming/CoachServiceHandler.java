@@ -10,5 +10,5 @@ public interface CoachServiceHandler {
 
   Coach getCoach(long coachId);
 
-  void updateCoach(long coachId, UpdateCoachCommand updateCoachCommand);
+  void updateCoach(UpdateCoachCommand updateCoachCommand);
 }

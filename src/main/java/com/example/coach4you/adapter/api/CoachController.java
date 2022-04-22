@@ -66,7 +66,7 @@ public class CoachController {
             request.sportIds(),
             request.activityIds(),
             request.professions());
-    coachServiceHandler.updateCoach(coachId, updateCoachCommand);
+    coachServiceHandler.updateCoach(updateCoachCommand);
     return new ResponseEntity<>(HttpStatus.CREATED);
   }
 }

@@ -22,7 +22,7 @@ class CoachTest {
     ProfessionSpecialization professionSpecialization =
         new ProfessionSpecialization(List.of("profession1, profession2"));
 
-    //when
+    // when
     Coach coach =
         new Coach(
             personDetails,

@@ -96,7 +96,7 @@ class CoachControllerTest {
             "Damian",
             "Kowalczuk",
             "damian.kowalczuk@gmail.com",
-                (short) 30,
+            (short) 30,
             "4-5",
             "Best examples coach",
             sportSpecializationIds,

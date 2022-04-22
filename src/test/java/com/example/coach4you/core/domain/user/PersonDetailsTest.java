@@ -14,7 +14,7 @@ class PersonDetailsTest {
     Short age = 15;
     String email = "nowak.adrian@gmail.com";
 
-    //when
+    // when
     PersonDetails personDetails = new PersonDetails(firstName, lastName, email, age);
 
     // then

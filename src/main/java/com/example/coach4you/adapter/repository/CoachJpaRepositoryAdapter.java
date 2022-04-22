@@ -8,9 +8,11 @@ import com.example.coach4you.core.domain.coach.Coach;
 import com.example.coach4you.core.domain.coach.SportSpecialization;
 import com.example.coach4you.core.exceptions.CoachNotFoundException;
 import com.example.coach4you.core.port.outgoing.CoachRepository;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -58,6 +60,11 @@ class CoachJpaRepositoryAdapter implements CoachRepository {
     coachDb.setProfessions(coach.getProfessionSpecialization().getProfessionsAsString());
     coachDb.setActivityDictionaries(activityDictionaries);
     coachDb.setSportDictionaries(sportDictionaries);
+  }
+
+  @Override
+  public boolean checkExists(long coachId) {
+    return coachJpaRepository.existsById(coachId);
   }
 
   private List<ActivityDictionaryDbModel> getAllActivityDictionariesByIds(

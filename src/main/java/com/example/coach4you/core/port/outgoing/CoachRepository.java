@@ -1,6 +1,7 @@
 package com.example.coach4you.core.port.outgoing;
 
 import com.example.coach4you.core.domain.coach.Coach;
+
 import java.util.Optional;
 
 public interface CoachRepository {
@@ -10,4 +11,6 @@ public interface CoachRepository {
   Optional<Coach> getCoachById(long coachId);
 
   void updateCoach(Coach coach);
+
+  boolean checkExists(long coachId);
 }

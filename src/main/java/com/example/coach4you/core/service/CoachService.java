@@ -55,7 +55,9 @@ class CoachService implements CoachServiceHandler {
   }
 
   @Override
-  public void updateCoach(final long coachId, final UpdateCoachCommand updateCoachCommand) {
+  public void updateCoach(final UpdateCoachCommand updateCoachCommand) {
+    validateExists(updateCoachCommand.coachId());
+
     PersonDetails personDetails =
         new PersonDetails(
             updateCoachCommand.firstName(),
@@ -70,13 +72,20 @@ class CoachService implements CoachServiceHandler {
         new ProfessionSpecialization(updateCoachCommand.professions());
     Coach coach =
         new Coach(
-            coachId,
+            updateCoachCommand.coachId(),
             personDetails,
             updateCoachCommand.yearsOfExperience(),
             updateCoachCommand.description(),
             professionSpecialization,
             sportSpecializations,
             activitySpecializations);
+
     coachRepository.updateCoach(coach);
+  }
+
+  public void validateExists(long coachId) {
+    if (!coachRepository.checkExists(coachId)) {
+      throw new CoachNotFoundException(coachId);
+    }
   }
 }
